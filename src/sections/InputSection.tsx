@@ -25,6 +25,7 @@ function InputSection() {
       return;
     }
     addItem(item);
+    setItem({ article: "", quantity: "" });
   };
 
   useEffect(() => {
@@ -36,11 +37,17 @@ function InputSection() {
   return (
     <section>
       <div className="flex flex-row gap-2 mb-2">
-        <Input className="w-6/7" id="articleInput" onChange={handleChange} />
+        <Input
+          className="w-6/7"
+          id="articleInput"
+          value={item.article}
+          onChange={handleChange}
+        />
         <Input
           className="w-1/7"
           id="quantityInput"
           type="number"
+          value={item.quantity}
           onChange={handleChange}
         />
       </div>

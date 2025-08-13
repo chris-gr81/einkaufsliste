@@ -1,5 +1,5 @@
 import type { PurchaseItem } from "@/types/types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 interface PurchaseItemType {
@@ -10,11 +10,16 @@ interface PurchaseItemType {
 const PurchaseContext = createContext<PurchaseItemType | undefined>(undefined);
 
 export const PurchaseProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<PurchaseItem[]>([]);
+  const initial = JSON.parse(localStorage.getItem("purchasor") || "[]");
+  const [items, setItems] = useState<PurchaseItem[]>(initial);
 
   const addItem = (item: PurchaseItem) => {
     setItems((prev) => [...prev, item]);
   };
+
+  useEffect(() => {
+    localStorage.setItem("purchasor", JSON.stringify(items));
+  }, [items]);
 
   return (
     <PurchaseContext.Provider value={{ items, addItem }}>
