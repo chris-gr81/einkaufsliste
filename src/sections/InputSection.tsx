@@ -3,11 +3,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { usePurchase } from "@/context/PurchaseContext";
+import { toast } from "sonner";
 
 function InputSection() {
   const { items, addItem } = usePurchase();
   const [isButton, setIsButton] = useState(true);
-  const [item, setItem] = useState<PurchaseItem>({ article: "", quantity: "" });
+  const [item, setItem] = useState<PurchaseItem>({
+    article: "",
+    quantity: "",
+    isMarked: false,
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.currentTarget;
@@ -21,11 +26,13 @@ function InputSection() {
 
   const handleSubmit = () => {
     if (items.some((i) => i.article === item.article)) {
-      alert("doppelt");
+      toast.error("Hinzufügen fehlgeschlagen", {
+        description: `${item.article} ist schon vorhanden.`,
+      });
       return;
     }
     addItem(item);
-    setItem({ article: "", quantity: "" });
+    setItem({ article: "", quantity: "", isMarked: false });
   };
 
   useEffect(() => {

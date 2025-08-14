@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import { PurchaseProvider } from "./context/PurchaseContext";
 import InputSection from "./sections/InputSection";
 import ItemSection from "./sections/ItemSection";
@@ -14,6 +15,7 @@ function App() {
           <ItemSection />
         </div>
       </main>
+      <Toaster richColors />
     </PurchaseProvider>
   );
 }
